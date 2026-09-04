@@ -265,8 +265,13 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({ onNavigateToRiskMoni
                       ))}
                     </Pie>
                     <Tooltip
-                      contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '6px', fontSize: '11px' }}
-                      formatter={(val: any) => [`${formatIndianNumber(val)} Works`, 'Projects Base']}
+                      contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '6px', fontSize: '11px', color: '#f8fafc' }}
+                      itemStyle={{ color: '#60a5fa', fontWeight: 600 }}
+                      labelStyle={{ color: '#f8fafc', fontWeight: 'bold' }}
+                      formatter={(val: any, name: any, item: any) => [
+                        `${formatIndianNumber(val)} Works`,
+                        item && item.payload && item.payload.name ? item.payload.name : 'Sector'
+                      ]}
                     />
                   </PieChart>
                 </ResponsiveContainer>
@@ -306,8 +311,10 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({ onNavigateToRiskMoni
                 <XAxis dataKey="state" stroke="#64748b" fontSize={10} angle={-15} textAnchor="end" />
                 <YAxis stroke="#64748b" fontSize={10} unit=" Cr" />
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '6px', fontSize: '11px' }}
-                  formatter={(val: any) => [`₹${val} Cr`, 'Amount']}
+                  contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '6px', fontSize: '11px', color: '#f8fafc' }}
+                  itemStyle={{ color: '#34d399', fontWeight: 600 }}
+                  labelStyle={{ color: '#f8fafc', fontWeight: 'bold' }}
+                  formatter={(val: any, name: any) => [`₹${val} Cr`, name === 'sanctioned' ? 'Sanctioned Budget' : 'Disbursed Expenditure']}
                 />
                 <Bar dataKey="sanctioned" fill="#3b82f6" radius={[4, 4, 0, 0]} name="Sanctioned" />
                 <Area type="monotone" dataKey="disbursed" fill="#10b981" stroke="#34d399" fillOpacity={0.3} name="Disbursed" />

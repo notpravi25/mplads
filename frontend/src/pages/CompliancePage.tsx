@@ -180,8 +180,10 @@ export const CompliancePage: React.FC<CompliancePageProps> = ({ onSelectWork }) 
                 <XAxis dataKey="category" stroke="#64748b" fontSize={10} interval={0} angle={-15} textAnchor="end" />
                 <YAxis domain={[0, 100]} stroke="#64748b" fontSize={11} unit="%" />
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '6px', fontSize: '11px' }}
-                  formatter={(val: any) => [`${val}% Uploaded`, 'Photo Compliance Rate']}
+                  contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '6px', fontSize: '11px', color: '#f8fafc' }}
+                  itemStyle={{ color: '#34d399', fontWeight: 600 }}
+                  labelStyle={{ color: '#f8fafc', fontWeight: 'bold' }}
+                  formatter={(val: any, name: any, item: any) => [`${val}% Uploaded`, item && item.payload && item.payload.fullCategory ? item.payload.fullCategory : 'Compliance Rate']}
                 />
                 <Bar dataKey="complianceRate" radius={[4, 4, 0, 0]}>
                   {categoryComplianceData.map((entry, index) => (
@@ -223,8 +225,10 @@ export const CompliancePage: React.FC<CompliancePageProps> = ({ onSelectWork }) 
                     ))}
                   </Pie>
                   <Tooltip
-                    contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '6px', fontSize: '11px' }}
-                    formatter={(val: any) => [`${formatIndianNumber(val)} Works`, 'Count']}
+                    contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '6px', fontSize: '11px', color: '#f8fafc' }}
+                    itemStyle={{ color: '#60a5fa', fontWeight: 600 }}
+                    labelStyle={{ color: '#f8fafc', fontWeight: 'bold' }}
+                    formatter={(val: any, name: any, item: any) => [`${formatIndianNumber(val)} Works`, item && item.payload && item.payload.name ? item.payload.name : 'Category Tier']}
                   />
                   <Legend
                     verticalAlign="bottom"
