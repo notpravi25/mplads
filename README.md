@@ -1,18 +1,36 @@
-# React + Vite
+# MPLADS AI-Powered Monitoring, Anomaly Detection & Risk Intelligence Platform
 
-live link: https://notpravi25.github.io/portfolio_2/
+## SIH Prototype Architecture
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An AI-powered monitoring and decision-support platform designed to analyze administrative, financial, project, and evidence data from the Members of Parliament Local Area Development Scheme (MPLADS).
 
-Currently, two official plugins are available:
+### Repository Structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```
+project/
+├── data/
+│   ├── raw/          # Original, untouched CSV/Excel datasets (T1 to T6)
+│   ├── processed/    # Cleaned, normalized, and validated data
+│   └── features/     # Feature-engineered analytical datasets
+├── docs/             # Technical specifications & data dictionaries
+├── models/           # Trained models and vector index artifacts
+├── notebooks/        # Data exploration and prototyping notebooks
+├── outputs/          # Generated risk reports, metrics, and alerts
+├── src/
+│   ├── data/         # Data loading and ingestion scripts
+│   ├── preprocessing/# Data cleaning, type parsing, and validation
+│   ├── features/     # Feature extraction engines
+│   ├── modules/      # Core analytical engines (financial, vendor, duplicate, compliance)
+│   ├── risk/         # Composite risk scoring and alert generation
+│   └── utils/        # Common helpers and logging utilities
+└── tests/            # Automated test suite
+```
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Module Development Pipeline
+1. **Module 1**: Data Foundation & Preprocessing
+2. **Module 2**: Financial & Expenditure Anomaly Detection
+3. **Module 3**: Vendor & Payment Risk Analysis
+4. **Module 4**: Potential Duplicate / Similar Work Detection (NLP)
+5. **Module 5**: Compliance & Data-Quality Monitoring
+6. **Module 6**: Risk Engine, Explainability & Alert Engine
+7. **Module 7**: Backend API & Visual Dashboard
