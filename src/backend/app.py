@@ -94,10 +94,20 @@ def get_national_overview():
     state_agg = master.groupby("state").agg(
         total_works=("work_id", "count"),
         total_sanctioned=("sanction_amount", "sum"),
+        total_disbursed=("effective_expenditure", "sum"),
         high_risk_works=("overall_risk_level", lambda x: (x.isin(["HIGH", "CRITICAL"])).sum())
     ).reset_index().sort_values("high_risk_works", ascending=False)
     
     state_list = [clean_record_for_json(r) for r in state_agg.to_dict(orient="records")]
+    
+    # Category-level aggregation
+    cat_agg = master.groupby("work_category").agg(
+        total_works=("work_id", "count"),
+        total_sanctioned=("sanction_amount", "sum"),
+        high_risk_works=("overall_risk_level", lambda x: (x.isin(["HIGH", "CRITICAL"])).sum())
+    ).reset_index().sort_values("total_works", ascending=False)
+    
+    cat_list = [clean_record_for_json(r) for r in cat_agg.to_dict(orient="records")]
     
     return {
         "summary": {
@@ -115,7 +125,8 @@ def get_national_overview():
             "HIGH": int(risk_counts.get("HIGH", 0)),
             "CRITICAL": int(risk_counts.get("CRITICAL", 0))
         },
-        "top_states": state_list[:10]
+        "top_states": state_list[:10],
+        "category_distribution": cat_list[:8]
     }
 
 @app.get("/api/risk-monitor")

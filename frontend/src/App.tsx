@@ -6,13 +6,16 @@ import { RiskMonitorPage } from './pages/RiskMonitorPage';
 import { ProjectDetailPage } from './pages/ProjectDetailPage';
 import { DuplicatePage } from './pages/DuplicatePage';
 import { AnalyticsPage } from './pages/AnalyticsPage';
+import { CompliancePage } from './pages/CompliancePage';
 import { MethodologyPage } from './pages/MethodologyPage';
+import { RiskAssistantDrawer } from './components/chat/RiskAssistantDrawer';
 
 export function App() {
   const [activeTab, setActiveTab] = useState<string>('overview');
   const [selectedWorkId, setSelectedWorkId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [initialSeverity, setInitialSeverity] = useState<string>('');
+  const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
 
   const handleNavigateToRiskMonitor = (severity?: string) => {
     if (severity) setInitialSeverity(severity);
@@ -56,6 +59,7 @@ export function App() {
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           onSearchSubmit={handleSearchSubmit}
+          onOpenChat={() => setIsChatOpen(true)}
         />
 
         <main className="flex-1 overflow-y-auto">
@@ -77,16 +81,20 @@ export function App() {
               )}
               {activeTab === 'analytics' && <AnalyticsPage />}
               {activeTab === 'compliance' && (
-                <RiskMonitorPage
-                  initialSeverity="MEDIUM"
-                  onSelectWork={handleSelectWork}
-                />
+                <CompliancePage onSelectWork={handleSelectWork} />
               )}
               {activeTab === 'methodology' && <MethodologyPage />}
             </>
           )}
         </main>
       </div>
+
+      {/* AI Governance & Risk Assistant Drawer */}
+      <RiskAssistantDrawer
+        isOpen={isChatOpen}
+        onClose={() => setIsChatOpen(false)}
+        onSelectWork={handleSelectWork}
+      />
     </div>
   );
 }

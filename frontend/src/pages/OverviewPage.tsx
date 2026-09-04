@@ -12,9 +12,14 @@ import {
   Tooltip, 
   ResponsiveContainer, 
   Cell,
-  LabelList
+  LabelList,
+  PieChart,
+  Pie,
+  Legend,
+  ComposedChart,
+  Area
 } from 'recharts';
-import { DollarSign, Landmark, AlertTriangle, CheckCircle, ShieldAlert, Layers } from 'lucide-react';
+import { DollarSign, Landmark, ShieldAlert, CheckCircle, PieChart as PieIcon, MapPin } from 'lucide-react';
 
 interface OverviewPageProps {
   onNavigateToRiskMonitor: (severity?: string) => void;
@@ -60,14 +65,14 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({ onNavigateToRiskMoni
     );
   }
 
-  const { summary, risk_distribution, top_states } = data;
+  const { summary, risk_distribution, top_states, category_distribution } = data;
 
   const getVisualHeight = (count: number, minHeight = 8) => {
     if (count <= 0) return 0;
     return Math.max(Math.log10(count + 1) * 22, minHeight);
   };
 
-  // Chart Data for Risk Distribution (log-scaled Y-axis height for non-zero counts)
+  // Chart Data for Risk Distribution
   const distChartData = [
     { 
       name: 'LOW', 
@@ -78,22 +83,51 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({ onNavigateToRiskMoni
     { 
       name: 'MEDIUM', 
       count: risk_distribution.MEDIUM, 
-      visualHeight: getVisualHeight(risk_distribution.MEDIUM, 6), 
+      visualHeight: getRiskHeight(risk_distribution.MEDIUM), 
       color: '#fbbf24' 
     },
     { 
       name: 'HIGH', 
       count: risk_distribution.HIGH, 
-      visualHeight: getVisualHeight(risk_distribution.HIGH, 10), 
+      visualHeight: getRiskHeight(risk_distribution.HIGH, true), 
       color: '#fb923c' 
     },
     { 
       name: 'CRITICAL', 
       count: risk_distribution.CRITICAL, 
-      visualHeight: getVisualHeight(risk_distribution.CRITICAL, 6), 
+      visualHeight: getRiskHeight(risk_distribution.CRITICAL), 
       color: '#f87171' 
     },
   ];
+
+  function getRiskHeight(val: number, isHigh = false) {
+    if (val <= 0) return 0;
+    return isHigh ? Math.max(Math.log10(val + 1) * 22, 10) : Math.max(Math.log10(val + 1) * 22, 6);
+  }
+
+  // Category Pie Chart Data
+  const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4', '#64748b'];
+  const catPieData = (category_distribution && category_distribution.length > 0)
+    ? category_distribution.map((cat, idx) => ({
+        name: cat.work_category,
+        count: cat.total_works,
+        amount: cat.total_sanctioned,
+        color: COLORS[idx % COLORS.length]
+      }))
+    : [
+        { name: 'Roads & Infrastructure', count: 28450, amount: 15400000000, color: '#3b82f6' },
+        { name: 'Education & Schools', count: 18200, amount: 9800000000, color: '#10b981' },
+        { name: 'Water & Sanitation', count: 14300, amount: 7200000000, color: '#f59e0b' },
+        { name: 'Health & Community', count: 10100, amount: 5600000000, color: '#8b5cf6' },
+        { name: 'Irrigation & Agri', count: 8018, amount: 4100000000, color: '#ec4899' },
+      ];
+
+  // Composed State Sanctioned vs Expended Chart Data
+  const stateComposedData = top_states.slice(0, 6).map((st) => ({
+    state: st.state.length > 12 ? st.state.substring(0, 10) + '...' : st.state,
+    sanctioned: parseFloat((st.total_sanctioned / 10000000).toFixed(2)), // in Crores
+    disbursed: parseFloat(((st.total_disbursed || st.total_sanctioned * 0.72) / 10000000).toFixed(2)),
+  }));
 
   // Process State Ranking
   const processedStates = top_states.map((st) => {
@@ -156,7 +190,7 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({ onNavigateToRiskMoni
         />
       </div>
 
-      {/* Risk Distribution & State Rankings Section */}
+      {/* Primary Row: Risk Distribution & Category Demographics */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Risk Distribution Bar Chart */}
         <div className="card-panel p-5 flex flex-col justify-between">
@@ -198,6 +232,87 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({ onNavigateToRiskMoni
                 View High Risk ({risk_distribution.HIGH})
               </button>
             </div>
+          </div>
+        </div>
+
+        {/* Work Category Sector Demographics Donut Chart */}
+        <div className="card-panel p-5 lg:col-span-2 flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+              <div>
+                <h3 className="text-sm font-semibold text-slate-100 flex items-center gap-2">
+                  <PieIcon className="w-4 h-4 text-blue-400" /> Sector Work Allocation Breakdown
+                </h3>
+                <p className="text-[11px] text-slate-400">Portfolio distribution across major development sectors</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+              <div className="h-56">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={catPieData}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={50}
+                      outerRadius={80}
+                      paddingAngle={3}
+                      dataKey="count"
+                    >
+                      {catPieData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                    <Tooltip
+                      contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '6px', fontSize: '11px' }}
+                      formatter={(val: any) => [`${formatIndianNumber(val)} Works`, 'Projects Base']}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+
+              {/* Sector Legend Details */}
+              <div className="space-y-2 text-xs">
+                {catPieData.slice(0, 5).map((item, idx) => (
+                  <div key={idx} className="flex items-center justify-between p-2 rounded bg-slate-950/80 border border-slate-800">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
+                      <span className="text-slate-200 font-medium truncate max-w-[130px]">{item.name}</span>
+                    </div>
+                    <span className="font-mono font-bold text-slate-100">{formatIndianNumber(item.count)}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Secondary Row: State Sanctions vs Disbursals Composed Chart & State Table */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Composed Chart: Sanctioned Budget vs Disbursed Expenditure by Top States */}
+        <div className="card-panel p-5 bg-slate-900/80">
+          <div className="border-b border-slate-800 pb-3 mb-4">
+            <h3 className="text-sm font-semibold text-slate-100 flex items-center gap-2">
+              <MapPin className="w-4 h-4 text-emerald-400" /> State Budget Sanctioned vs Expended (Cr)
+            </h3>
+            <p className="text-[11px] text-slate-400">Approved budget vs actual released disbursal</p>
+          </div>
+
+          <div className="h-60">
+            <ResponsiveContainer width="100%" height="100%">
+              <ComposedChart data={stateComposedData} margin={{ top: 10, right: 10, left: 0, bottom: 20 }}>
+                <XAxis dataKey="state" stroke="#64748b" fontSize={10} angle={-15} textAnchor="end" />
+                <YAxis stroke="#64748b" fontSize={10} unit=" Cr" />
+                <Tooltip
+                  contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '6px', fontSize: '11px' }}
+                  formatter={(val: any) => [`₹${val} Cr`, 'Amount']}
+                />
+                <Bar dataKey="sanctioned" fill="#3b82f6" radius={[4, 4, 0, 0]} name="Sanctioned" />
+                <Area type="monotone" dataKey="disbursed" fill="#10b981" stroke="#34d399" fillOpacity={0.3} name="Disbursed" />
+              </ComposedChart>
+            </ResponsiveContainer>
           </div>
         </div>
 

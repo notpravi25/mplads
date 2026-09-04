@@ -19,6 +19,14 @@ export interface StateSummary {
   state: string;
   total_works: number;
   total_sanctioned: number;
+  total_disbursed?: number;
+  high_risk_works: number;
+}
+
+export interface CategorySummary {
+  work_category: string;
+  total_works: number;
+  total_sanctioned: number;
   high_risk_works: number;
 }
 
@@ -26,6 +34,7 @@ export interface NationalOverviewResponse {
   summary: OverviewSummary;
   risk_distribution: RiskDistribution;
   top_states: StateSummary[];
+  category_distribution?: CategorySummary[];
 }
 
 export interface WorkRecord {

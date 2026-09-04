@@ -1,16 +1,18 @@
 import React from 'react';
-import { Search, RefreshCw, Layers } from 'lucide-react';
+import { Search, RefreshCw, Layers, Bot } from 'lucide-react';
 
 interface TopbarProps {
   searchQuery: string;
   setSearchQuery: (q: string) => void;
   onSearchSubmit: () => void;
+  onOpenChat?: () => void;
 }
 
 export const Topbar: React.FC<TopbarProps> = ({
   searchQuery,
   setSearchQuery,
-  onSearchSubmit
+  onSearchSubmit,
+  onOpenChat
 }) => {
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
@@ -31,9 +33,19 @@ export const Topbar: React.FC<TopbarProps> = ({
         </span>
       </div>
 
-      {/* Global Search Bar */}
-      <div className="flex items-center gap-3 w-96">
-        <div className="relative w-full">
+      {/* Global Search Bar & AI Assistant Button */}
+      <div className="flex items-center gap-3">
+        {onOpenChat && (
+          <button
+            onClick={onOpenChat}
+            className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-xs font-semibold shadow-md shadow-blue-900/30 transition-all border border-blue-400/30 hover:scale-[1.02] active:scale-[0.98]"
+          >
+            <Bot className="w-4 h-4" />
+            <span>AI Risk Assistant</span>
+          </button>
+        )}
+
+        <div className="relative w-80">
           <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
           <input
             type="text"
