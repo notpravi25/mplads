@@ -11,7 +11,8 @@ import {
   YAxis, 
   Tooltip, 
   ResponsiveContainer, 
-  Cell 
+  Cell,
+  LabelList
 } from 'recharts';
 import { DollarSign, Landmark, AlertTriangle, CheckCircle, ShieldAlert, Layers } from 'lucide-react';
 
@@ -61,12 +62,32 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({ onNavigateToRiskMoni
 
   const { summary, risk_distribution, top_states } = data;
 
-  // Chart Data for Risk Distribution
+  // Chart Data for Risk Distribution (log-scaled Y-axis height so HIGH/CRITICAL bars are clearly visible alongside LOW)
   const distChartData = [
-    { name: 'LOW', count: risk_distribution.LOW, color: '#34d399' },
-    { name: 'MEDIUM', count: risk_distribution.MEDIUM, color: '#fbbf24' },
-    { name: 'HIGH', count: risk_distribution.HIGH, color: '#fb923c' },
-    { name: 'CRITICAL', count: risk_distribution.CRITICAL, color: '#f87171' },
+    { 
+      name: 'LOW', 
+      count: risk_distribution.LOW, 
+      visualHeight: Math.max(risk_distribution.LOW > 0 ? Math.log10(risk_distribution.LOW + 1) * 22 : 0, 6), 
+      color: '#34d399' 
+    },
+    { 
+      name: 'MEDIUM', 
+      count: risk_distribution.MEDIUM, 
+      visualHeight: Math.max(risk_distribution.MEDIUM > 0 ? Math.log10(risk_distribution.MEDIUM + 1) * 22 : 0, 6), 
+      color: '#fbbf24' 
+    },
+    { 
+      name: 'HIGH', 
+      count: risk_distribution.HIGH, 
+      visualHeight: Math.max(risk_distribution.HIGH > 0 ? Math.log10(risk_distribution.HIGH + 1) * 22 : 0, 10), 
+      color: '#fb923c' 
+    },
+    { 
+      name: 'CRITICAL', 
+      count: risk_distribution.CRITICAL, 
+      visualHeight: Math.max(risk_distribution.CRITICAL > 0 ? Math.log10(risk_distribution.CRITICAL + 1) * 22 : 0, 4), 
+      color: '#f87171' 
+    },
   ];
 
   // Process State Ranking
@@ -144,14 +165,15 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({ onNavigateToRiskMoni
 
             <div className="h-56">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={distChartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <BarChart data={distChartData} margin={{ top: 22, right: 10, left: 10, bottom: 0 }}>
                   <XAxis dataKey="name" stroke="#64748b" fontSize={11} />
-                  <YAxis stroke="#64748b" fontSize={11} />
+                  <YAxis hide domain={[0, 'dataMax + 12']} />
                   <Tooltip
                     contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', borderRadius: '6px', fontSize: '12px' }}
-                    formatter={(val: any) => [formatIndianNumber(val), 'Projects']}
+                    formatter={(val: any, name: any, item: any) => [formatIndianNumber(item.payload.count), 'Projects']}
                   />
-                  <Bar dataKey="count" radius={[4, 4, 0, 0]}>
+                  <Bar dataKey="visualHeight" radius={[4, 4, 0, 0]}>
+                    <LabelList dataKey="count" position="top" formatter={formatIndianNumber} fontSize={10} fill="#94a3b8" />
                     {distChartData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}

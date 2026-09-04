@@ -104,10 +104,10 @@ export const RiskMonitorPage: React.FC<RiskMonitorPageProps> = ({
           className="bg-slate-950 border border-slate-700 rounded px-3 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-blue-500"
         >
           <option value="">All Risk Severities</option>
-          <option value="CRITICAL">CRITICAL (&ge; 85)</option>
-          <option value="HIGH">HIGH (65 - 84)</option>
-          <option value="MEDIUM">MEDIUM (35 - 64)</option>
-          <option value="LOW">LOW (&lt; 35)</option>
+          <option value="CRITICAL">CRITICAL (85+ Score)</option>
+          <option value="HIGH">HIGH (65 - 84 Score)</option>
+          <option value="MEDIUM">MEDIUM (35 - 64 Score)</option>
+          <option value="LOW">LOW (Below 35 Score)</option>
         </select>
 
         {/* State Dropdown */}
