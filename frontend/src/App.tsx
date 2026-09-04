@@ -79,7 +79,7 @@ export function App() {
               {activeTab === 'duplicate-inspector' && (
                 <DuplicatePage onSelectWork={handleSelectWork} />
               )}
-              {activeTab === 'analytics' && <AnalyticsPage />}
+              {activeTab === 'analytics' && <AnalyticsPage onSelectWork={handleSelectWork} />}
               {activeTab === 'compliance' && (
                 <CompliancePage onSelectWork={handleSelectWork} />
               )}
