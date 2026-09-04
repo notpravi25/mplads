@@ -49,28 +49,33 @@ export const AnalyticsPage: React.FC = () => {
   const highFinancialWorks = works.filter((w) => (w.financial_risk_score || 0) >= 65);
   const highVendorWorks = works.filter((w) => (w.vendor_risk_score || 0) >= 65);
 
-  // Financial Budget Outlier Categories for Bar Chart (log-scaled visual width for distinct visibility)
+  // Financial Budget Outlier Categories for Bar Chart (log-scaled visual width for non-zero counts)
   const normalBudgetCount = works.filter((w) => (w.amount_to_peer_ratio || 1) <= 1.5).length;
   const elevatedBudgetCount = works.filter((w) => (w.amount_to_peer_ratio || 1) > 1.5 && (w.amount_to_peer_ratio || 1) <= 3.0).length;
   const extremeBudgetCount = works.filter((w) => (w.amount_to_peer_ratio || 1) > 3.0).length;
+
+  const getVisualWidth = (count: number) => {
+    if (count <= 0) return 0;
+    return Math.max(Math.log10(count + 1) * 25, 8);
+  };
 
   const budgetDistribution = [
     { 
       label: 'Normal Budget (<=1.5x Peer Median)', 
       count: normalBudgetCount, 
-      visualWidth: Math.max(normalBudgetCount > 0 ? Math.log10(normalBudgetCount + 1) * 25 : 0, 10), 
+      visualWidth: getVisualWidth(normalBudgetCount), 
       fill: '#34d399' 
     },
     { 
       label: 'Elevated Budget (1.5x - 3x Peer Median)', 
       count: elevatedBudgetCount, 
-      visualWidth: Math.max(elevatedBudgetCount > 0 ? Math.log10(elevatedBudgetCount + 1) * 25 : 0, 10), 
+      visualWidth: getVisualWidth(elevatedBudgetCount), 
       fill: '#fbbf24' 
     },
     { 
       label: 'Extreme Outlier (>3x Peer Median)', 
       count: extremeBudgetCount, 
-      visualWidth: Math.max(extremeBudgetCount > 0 ? Math.log10(extremeBudgetCount + 1) * 25 : 0, 10), 
+      visualWidth: getVisualWidth(extremeBudgetCount), 
       fill: '#f87171' 
     },
   ];

@@ -62,30 +62,35 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({ onNavigateToRiskMoni
 
   const { summary, risk_distribution, top_states } = data;
 
-  // Chart Data for Risk Distribution (log-scaled Y-axis height so HIGH/CRITICAL bars are clearly visible alongside LOW)
+  const getVisualHeight = (count: number, minHeight = 8) => {
+    if (count <= 0) return 0;
+    return Math.max(Math.log10(count + 1) * 22, minHeight);
+  };
+
+  // Chart Data for Risk Distribution (log-scaled Y-axis height for non-zero counts)
   const distChartData = [
     { 
       name: 'LOW', 
       count: risk_distribution.LOW, 
-      visualHeight: Math.max(risk_distribution.LOW > 0 ? Math.log10(risk_distribution.LOW + 1) * 22 : 0, 6), 
+      visualHeight: getVisualHeight(risk_distribution.LOW, 6), 
       color: '#34d399' 
     },
     { 
       name: 'MEDIUM', 
       count: risk_distribution.MEDIUM, 
-      visualHeight: Math.max(risk_distribution.MEDIUM > 0 ? Math.log10(risk_distribution.MEDIUM + 1) * 22 : 0, 6), 
+      visualHeight: getVisualHeight(risk_distribution.MEDIUM, 6), 
       color: '#fbbf24' 
     },
     { 
       name: 'HIGH', 
       count: risk_distribution.HIGH, 
-      visualHeight: Math.max(risk_distribution.HIGH > 0 ? Math.log10(risk_distribution.HIGH + 1) * 22 : 0, 10), 
+      visualHeight: getVisualHeight(risk_distribution.HIGH, 10), 
       color: '#fb923c' 
     },
     { 
       name: 'CRITICAL', 
       count: risk_distribution.CRITICAL, 
-      visualHeight: Math.max(risk_distribution.CRITICAL > 0 ? Math.log10(risk_distribution.CRITICAL + 1) * 22 : 0, 4), 
+      visualHeight: getVisualHeight(risk_distribution.CRITICAL, 6), 
       color: '#f87171' 
     },
   ];
