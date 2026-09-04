@@ -9,7 +9,8 @@ import {
   YAxis, 
   Tooltip, 
   ResponsiveContainer, 
-  Cell 
+  Cell,
+  LabelList
 } from 'recharts';
 import { 
   DollarSign, 
@@ -48,15 +49,30 @@ export const AnalyticsPage: React.FC = () => {
   const highFinancialWorks = works.filter((w) => (w.financial_risk_score || 0) >= 65);
   const highVendorWorks = works.filter((w) => (w.vendor_risk_score || 0) >= 65);
 
-  // Financial Budget Outlier Categories for Bar Chart
+  // Financial Budget Outlier Categories for Bar Chart (log-scaled visual width for distinct visibility)
   const normalBudgetCount = works.filter((w) => (w.amount_to_peer_ratio || 1) <= 1.5).length;
   const elevatedBudgetCount = works.filter((w) => (w.amount_to_peer_ratio || 1) > 1.5 && (w.amount_to_peer_ratio || 1) <= 3.0).length;
   const extremeBudgetCount = works.filter((w) => (w.amount_to_peer_ratio || 1) > 3.0).length;
 
   const budgetDistribution = [
-    { label: 'Normal Budget (<=1.5x Peer Median)', count: normalBudgetCount, fill: '#34d399' },
-    { label: 'Elevated Budget (1.5x - 3x Peer Median)', count: elevatedBudgetCount, fill: '#fbbf24' },
-    { label: 'Extreme Outlier (>3x Peer Median)', count: extremeBudgetCount, fill: '#f87171' },
+    { 
+      label: 'Normal Budget (<=1.5x Peer Median)', 
+      count: normalBudgetCount, 
+      visualWidth: Math.max(normalBudgetCount > 0 ? Math.log10(normalBudgetCount + 1) * 25 : 0, 10), 
+      fill: '#34d399' 
+    },
+    { 
+      label: 'Elevated Budget (1.5x - 3x Peer Median)', 
+      count: elevatedBudgetCount, 
+      visualWidth: Math.max(elevatedBudgetCount > 0 ? Math.log10(elevatedBudgetCount + 1) * 25 : 0, 10), 
+      fill: '#fbbf24' 
+    },
+    { 
+      label: 'Extreme Outlier (>3x Peer Median)', 
+      count: extremeBudgetCount, 
+      visualWidth: Math.max(extremeBudgetCount > 0 ? Math.log10(extremeBudgetCount + 1) * 25 : 0, 10), 
+      fill: '#f87171' 
+    },
   ];
 
   // Top Vendors from records
@@ -200,14 +216,15 @@ export const AnalyticsPage: React.FC = () => {
             
             <div className="h-56">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={budgetDistribution} layout="vertical" margin={{ top: 10, right: 30, left: 180, bottom: 5 }}>
-                  <XAxis type="number" stroke="#64748b" fontSize={11} />
+                <BarChart data={budgetDistribution} layout="vertical" margin={{ top: 10, right: 100, left: 180, bottom: 5 }}>
+                  <XAxis type="number" hide domain={[0, 'dataMax + 15']} />
                   <YAxis type="category" dataKey="label" stroke="#94a3b8" fontSize={11} tickLine={false} width={170} />
                   <Tooltip
                     contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '6px', fontSize: '11px' }}
-                    formatter={(val: any) => [`${val} Projects`, 'Count']}
+                    formatter={(val: any, name: any, item: any) => [`${formatIndianNumber(item.payload.count)} Projects`, 'Count']}
                   />
-                  <Bar dataKey="count" radius={[0, 4, 4, 0]}>
+                  <Bar dataKey="visualWidth" radius={[0, 4, 4, 0]}>
+                    <LabelList dataKey="count" position="right" formatter={(v: any) => `${formatIndianNumber(v)} Projects`} fontSize={11} fill="#94a3b8" />
                     {budgetDistribution.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.fill} />
                     ))}
