@@ -1,0 +1,37 @@
+# Node dependencies
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+
+# System & IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs and generated local artifacts
+*.log
+output/
+tmp/
+
+# Data sync runtime state, snapshots, previews, and training caches
+data/sync_previews/
+data/snapshots/
+data/sync_history.json
+data/sync_state.json
+data/sync_audit.jsonl
+data/sync_job_status.json
+data/training/
+data/downloaded_pdfs/
+frontend/vite.config.ts.timestamp-*.mjs
+.codex-finalizer/
+scratch/*.exe
+*.exe
