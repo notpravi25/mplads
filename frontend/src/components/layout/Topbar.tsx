@@ -1,66 +1,113 @@
 import React from 'react';
-import { Search, Sparkles, Menu, Sun, Moon } from 'lucide-react';
+import { Compass, ClipboardCheck, Menu } from 'lucide-react';
 
 interface TopbarProps {
   searchQuery: string;
   setSearchQuery: (q: string) => void;
   onSearchSubmit: () => void;
-  onOpenChat: () => void;
+  onOpenCitizenPortal: () => void;
+  onOpenOfficerCenter: () => void;
   onOpenSidebar: () => void;
-  onToggleSidebar: () => void;
-  onToggleTheme: () => void;
-  isDark: boolean;
   isSidebarCollapsed: boolean;
+  activeTab?: string;
 }
 
 export const Topbar: React.FC<TopbarProps> = ({
   searchQuery,
   setSearchQuery,
   onSearchSubmit,
-  onOpenChat,
+  onOpenCitizenPortal,
+  onOpenOfficerCenter,
   onOpenSidebar,
-  onToggleSidebar,
-  onToggleTheme,
-  isDark,
   isSidebarCollapsed,
+  activeTab = 'overview',
 }) => {
+  const getBreadcrumb = () => {
+    switch (activeTab) {
+      case 'overview': return 'NATIONAL PORTFOLIO  /  OVERVIEW';
+      case 'risk-monitor': return 'PORTFOLIO  /  REVIEW CASES';
+      case 'state-risk-analytics': return 'PORTFOLIO  /  STATE RISK & RECORDS';
+      case 'mp-intelligence': return 'PORTFOLIO  /  MP WORKS & FUND INTELLIGENCE';
+      case 'financial-analytics': return 'ENGINES  /  FINANCIAL ANOMALY ANALYTICS';
+      case 'geotag-evidence': return 'ENGINES  /  FIELD PHOTOGRAPHIC EVIDENCE';
+      case 'duplicate-inspector': return 'ENGINES  /  CANDIDATE DUPLICATE INSPECTOR';
+      case 'compliance-monitor': return 'ENGINES  /  COMPLIANCE EVIDENCE GAPS';
+      case 'schedule-progress': return 'ENGINES  /  SCHEDULE & PROGRESS RISK';
+      case 'material-fairness': return 'ENGINES  /  MATERIAL FAIRNESS';
+      case 'officer-dashboard': return 'OPERATIONS  /  OFFICER CENTER';
+      case 'citizen-portal': return 'OPERATIONS  /  CITIZEN PORTAL';
+      case 'data-sync': return 'GOVERNANCE  /  DATA SYNC & STATUS';
+      case 'model-monitoring': return 'GOVERNANCE  /  MODEL MONITORING';
+      default: return 'NATIONAL PORTFOLIO  /  OVERVIEW';
+    }
+  };
+
+  const getPageLabel = () => {
+    switch (activeTab) {
+      case 'overview': return 'Overview';
+      case 'risk-monitor': return 'Review cases';
+      case 'state-risk-analytics': return 'State risk & records';
+      case 'mp-intelligence': return 'MP intelligence';
+      case 'financial-analytics': return 'Financial analytics';
+      case 'geotag-evidence': return 'Field photographic evidence';
+      case 'duplicate-inspector': return 'Duplicate inspector';
+      case 'compliance-monitor': return 'Compliance evidence gaps';
+      case 'schedule-progress': return 'Schedule & progress risk';
+      case 'material-fairness': return 'Material fairness';
+      case 'officer-dashboard': return 'Officer center';
+      case 'citizen-portal': return 'Citizen portal';
+      case 'data-sync': return 'Data sync & status';
+      case 'model-monitoring': return 'Model register';
+      default: return 'Overview';
+    }
+  };
+
   return (
-    <header className={`shell-topbar ${isSidebarCollapsed ? 'shell-topbar--collapsed' : ''} fixed top-0 right-0 left-0 h-16 ${isDark ? 'bg-[#0f172a] border-slate-800' : 'bg-white border-slate-200 shadow-sm'} border-b px-4 sm:px-6 flex items-center justify-between z-40 transition-[left,background-color] duration-200`}>
-      <button aria-label="Open navigation" onClick={onOpenSidebar} className={`lg:hidden mr-3 w-9 h-9 rounded-xl border flex items-center justify-center ${isDark ? 'bg-slate-800 border-slate-700 text-slate-200' : 'bg-slate-100 border-slate-200 text-slate-700'}`}>
-        <Menu className="w-5 h-5" />
-      </button>
-      <button aria-label="Collapse or expand sidebar" onClick={onToggleSidebar} className={`hidden lg:flex mr-3 w-9 h-9 rounded-xl border items-center justify-center ${isDark ? 'bg-slate-800 border-slate-700 text-slate-200 hover:bg-slate-700' : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'}`}>
-        <Menu className="w-5 h-5" />
-      </button>
-      {/* Search Input Bar Pill */}
-      <div className="flex-1 max-w-md min-w-0">
-        <form onSubmit={(e) => { e.preventDefault(); onSearchSubmit(); }} className="relative">
-          <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
-          <input
-            type="text"
-            placeholder="Search Work ID, District, MP..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className={`w-full pl-10 pr-4 py-2 rounded-full text-xs focus:outline-none focus:ring-2 transition-all ${isDark ? 'bg-slate-800 border border-slate-700 text-slate-100 placeholder:text-slate-500 focus:bg-slate-800 focus:ring-slate-100' : 'bg-slate-50 border border-slate-200 text-slate-900 placeholder:text-slate-400 focus:bg-white focus:ring-slate-300'}`}
-          />
-        </form>
+    <header className={`shell-topbar ${isSidebarCollapsed ? 'shell-topbar--collapsed' : ''}`}>
+      <div className="shell-topbar__context">
+        <button type="button" aria-label="Open navigation" onClick={onOpenSidebar} className="shell-topbar__menu">
+          <Menu className="w-4 h-4" />
+        </button>
+        <span className="shell-topbar__page-label">{getPageLabel()}</span>
+        <span className="editorial-crumb shell-topbar__breadcrumb select-none">
+          {getBreadcrumb()}
+        </span>
       </div>
 
-      {/* Header Right Action Items */}
-      <div className="flex items-center gap-3">
-        {/* AI Risk Assistant Button */}
+      <div className="shell-topbar__actions">
+        <form onSubmit={(e) => { e.preventDefault(); onSearchSubmit(); }} className="shell-topbar__search">
+          <input
+            aria-label="Search works"
+            type="text"
+            placeholder="Search work ID, district, MP…"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="editorial-search"
+          />
+        </form>
+
         <button
-          onClick={onOpenChat}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-extrabold shadow-sm transition-all ${isDark ? 'bg-slate-100 hover:bg-white text-slate-900' : 'bg-[#1f3a63] hover:bg-[#294b7d] text-white'}`}
+          type="button"
+          id="citizen-login-btn"
+          onClick={onOpenCitizenPortal}
+          className="shell-topbar__action shell-topbar__action--citizen"
+          title="Citizen Portal: Report works with geotagged proof"
         >
-          <Sparkles className="w-4 h-4 text-amber-600 animate-pulse" />
-          <span className="hidden sm:inline">AI Assistant</span>
+          <Compass className="w-3.5 h-3.5 text-[#b24e28]" />
+          <span>Citizen Portal</span>
         </button>
 
-        {/* Settings Gear Icon Pill */}
-        <button aria-label="Toggle light and dark mode" onClick={onToggleTheme} className={`w-9 h-9 rounded-full border flex items-center justify-center transition-colors shadow-2xs ${isDark ? 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700' : 'bg-white border-slate-300 text-slate-600 hover:bg-slate-100'}`}>
-          {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+        <button
+          type="button"
+          id="officer-center-btn"
+          onClick={onOpenOfficerCenter}
+          className="shell-topbar__action shell-topbar__action--officer"
+          title="Implementing Officer Center"
+        >
+          <ClipboardCheck className="w-3.5 h-3.5 text-[#4b8c72]" />
+          <span>Officer Center</span>
         </button>
+
       </div>
     </header>
   );

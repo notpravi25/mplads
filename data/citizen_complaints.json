@@ -1,0 +1,118 @@
+[
+  {
+    "complaint_id": "CIT-2026-3600",
+    "work_id": "WS/SANC/000001",
+    "work_title": "Construction of Community Bhavan at Navalgund TQ Belavatagi Village Pry No 1/A Near Shivanand Math Continue Work",
+    "state": "KARNATAKA",
+    "constituency": "DHARWAD",
+    "work_status": "Physical Inspection",
+    "category": "SUBSTANDARD_MATERIAL",
+    "category_label": "Substandard or Improper Material Quality",
+    "severity": "HIGH",
+    "description": "Severe cracks on retaining wall within 2 weeks of completion. Substandard cement ratio used by contractor.",
+    "location": {
+      "address": "DHARWAD, KARNATAKA"
+    },
+    "proof_images": [],
+    "proof_docs": [],
+    "citizen_name": "Anonymous Citizen",
+    "citizen_phone": null,
+    "citizen_email": null,
+    "is_anonymous": true,
+    "created_at": "2026-09-15T21:38:41.997574",
+    "status": "FIELD_INSPECTION_ORDERED",
+    "officer_action_notes": "Field verification assigned to Junior Engineer / Assistant Executive Engineer.",
+    "officer_action_date": "2026-09-15T21:39:50.321490"
+  },
+  {
+    "complaint_id": "CIT-2026-0814",
+    "work_id": "WS/SANC/000004",
+    "work_title": "Construction of Maremma Cultural bhavan at Neerlgudda village Shiggava TQ",
+    "state": "KARNATAKA",
+    "constituency": "DHARWAD",
+    "work_status": "Work partially Completed",
+    "category": "SUBSTANDARD_MATERIAL",
+    "category_label": "Substandard / Improper Material Quality",
+    "severity": "HIGH",
+    "description": "Contractor using substandard, unbranded cement bags below OPC 33 instead of specified OPC 53. Foundation pillars show prominent honeycombing and crumbling sand mix.",
+    "location": {
+      "lat": 15.1438,
+      "lon": 75.3128,
+      "accuracy": 8.5,
+      "address": "Neerlgudda Village, Shiggava Taluk, Dharwad, Karnataka",
+      "timestamp": "2026-09-12T11:42:00"
+    },
+    "proof_images": [
+      "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&w=800&q=80"
+    ],
+    "proof_docs": [],
+    "citizen_name": "Ramesh K. Patil",
+    "citizen_phone": "+91 98451 23098",
+    "citizen_email": "ramesh.patil@grampanchayat.org",
+    "is_anonymous": false,
+    "created_at": "2026-09-12T11:45:32",
+    "status": "PENDING_VERIFICATION",
+    "officer_action_notes": "Queued for Assistant Executive Engineer (AEE) site inspection.",
+    "officer_action_date": "2026-09-13T10:00:00"
+  },
+  {
+    "complaint_id": "CIT-2026-0922",
+    "work_id": "WS/SANC/000001",
+    "work_title": "Construction of Community Bhavan at Navalgund TQ Belavatagi Village Pry No 1/A Near Shivanand Math Continue Work",
+    "state": "KARNATAKA",
+    "constituency": "DHARWAD",
+    "work_status": "Physical Inspection",
+    "category": "EXECUTION_DELAY",
+    "category_label": "Severe Execution Delay / Abandoned Site",
+    "severity": "CRITICAL",
+    "description": "Work was halted 5 months ago after digging deep foundation trenches. Rainwater has collected in trenches causing hazard for local school children. Zero progress on site.",
+    "location": {
+      "lat": 15.5492,
+      "lon": 75.3619,
+      "accuracy": 12.0,
+      "address": "Near Shivanand Math, Belavatagi Village, Navalgund TQ, Dharwad, Karnataka",
+      "timestamp": "2026-09-14T09:15:00"
+    },
+    "proof_images": [
+      "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=800&q=80"
+    ],
+    "proof_docs": [],
+    "citizen_name": "Village Welfare Youth Association",
+    "citizen_phone": "+91 94480 87612",
+    "citizen_email": "belavatagi.youth@gmail.com",
+    "is_anonymous": false,
+    "created_at": "2026-09-14T09:20:15",
+    "status": "FIELD_INSPECTION_ORDERED",
+    "officer_action_notes": "Field verification assigned to Junior Engineer / Assistant Executive Engineer.",
+    "officer_action_date": "2026-09-16T00:13:12.234099"
+  },
+  {
+    "complaint_id": "CIT-2026-1045",
+    "work_id": "WS/SANC/000002",
+    "work_title": "Construction of College room of CBS Charitable Foudation at Nulvi Vilage Pry No 817/3 Continued work",
+    "state": "KARNATAKA",
+    "constituency": "DHARWAD",
+    "work_status": "Sanction",
+    "category": "FUND_MISAPPROPRIATION",
+    "category_label": "Misuse of Funds / Inflated Invoices",
+    "severity": "MEDIUM",
+    "description": "Sanctioned \u20b95,00,000 for single classroom, but contractor measurement book quotes unit rates for structural steel that are nearly 40% above the local PWD Schedule of Rates.",
+    "location": {
+      "lat": 15.3129,
+      "lon": 75.1432,
+      "accuracy": 15.0,
+      "address": "CBS College Campus, Nulvi Village, Dharwad",
+      "timestamp": "2026-09-15T14:30:00"
+    },
+    "proof_images": [],
+    "proof_docs": [],
+    "citizen_name": "Anonymous Whistleblower",
+    "citizen_phone": "",
+    "citizen_email": "",
+    "is_anonymous": true,
+    "created_at": "2026-09-15T14:32:10",
+    "status": "PENDING_VERIFICATION",
+    "officer_action_notes": null,
+    "officer_action_date": null
+  }
+]

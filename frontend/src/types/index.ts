@@ -294,6 +294,7 @@ export interface NationalOverviewResponse {
     compliance_risk_works?: number;
     duplicate_risk_works?: number;
     schedule_risk_works?: number;
+    duplicate_candidate_pairs?: number;
   }>;
   state_metrics?: Array<{
     state: string;
@@ -508,7 +509,12 @@ export interface OfficerWorkResponse {
   material?: any;
   material_warning?: string | null;
   attendance: { available: boolean; warning?: string };
-  citizen_feedback: { available: boolean; warning?: string };
+  citizen_feedback: { 
+    available: boolean; 
+    total_complaints?: number; 
+    complaints?: CitizenComplaint[]; 
+    warning?: string | null; 
+  };
   candidate_duplicates: CandidateDuplicatePair[];
   compliance_findings: ComplianceFinding[];
   timeline: Array<{ event: string; date: string; source: string; detail?: string }>;
@@ -543,4 +549,67 @@ export interface FinancialBenchmarkRecord {
 
 export interface FinancialBenchmarkResponse extends PaginatedResponse<FinancialBenchmarkRecord> {
   available: { states: string[]; sectors: string[]; subsectors: string[] };
+}
+
+export interface CitizenComplaintLocation {
+  lat?: number;
+  lon?: number;
+  accuracy?: number;
+  address?: string;
+  timestamp?: string;
+}
+
+export interface CitizenComplaint {
+  complaint_id: string;
+  work_id?: string | null;
+  work_title?: string | null;
+  state?: string | null;
+  constituency?: string | null;
+  work_status?: string | null;
+  category: string;
+  category_label: string;
+  severity: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL' | string;
+  description: string;
+  location?: CitizenComplaintLocation;
+  proof_images?: string[];
+  proof_docs?: string[];
+  citizen_name?: string;
+  citizen_phone?: string | null;
+  citizen_email?: string | null;
+  is_anonymous: boolean;
+  created_at: string;
+  status: 'PENDING_VERIFICATION' | 'FIELD_INSPECTION_ORDERED' | 'SHOW_CAUSE_ISSUED' | 'RESOLVED' | 'DISMISSED' | string;
+  officer_action_notes?: string | null;
+  officer_action_date?: string | null;
+}
+
+export interface CitizenComplaintSubmission {
+  work_id?: string | null;
+  work_title?: string | null;
+  state?: string | null;
+  constituency?: string | null;
+  work_status?: string | null;
+  category: string;
+  category_label: string;
+  severity: string;
+  description: string;
+  location?: CitizenComplaintLocation;
+  proof_images?: string[];
+  proof_docs?: string[];
+  citizen_name?: string;
+  citizen_phone?: string;
+  citizen_email?: string;
+  is_anonymous: boolean;
+}
+
+export interface CitizenComplaintsResponse {
+  total: number;
+  complaints: CitizenComplaint[];
+}
+
+export interface CitizenNearbyWorksResponse {
+  total: number;
+  page: number;
+  limit: number;
+  works: WorkRecord[];
 }

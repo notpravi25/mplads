@@ -86,7 +86,13 @@ interface AnalysisResult {
   auditor_guidance: string[];
 }
 
-export function MaterialFairnessPage() {
+interface MaterialFairnessProps {
+  initialViewTab?: 'audit' | 'ingestion' | 'benchmarks';
+  onSelectWork?: (workId: string) => void;
+  showHeader?: boolean;
+}
+
+export function MaterialFairnessPage({ initialViewTab = 'audit', onSelectWork, showHeader = true }: MaterialFairnessProps = {}) {
   const [samples, setSamples] = useState<SampleDoc[]>([]);
   const [selectedSampleId, setSelectedSampleId] = useState<string>('sample_cement_opc53_overpriced');
   const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
@@ -105,7 +111,7 @@ export function MaterialFairnessPage() {
   const [showRawTextEditor, setShowRawTextEditor] = useState<boolean>(false);
 
   // View Navigation
-  const [activeViewTab, setActiveViewTab] = useState<'audit' | 'ingestion' | 'benchmarks'>('audit');
+  const [activeViewTab, setActiveViewTab] = useState<'audit' | 'ingestion' | 'benchmarks'>(initialViewTab);
 
   // Real-world Works Linker
   const [workSearchQuery, setWorkSearchQuery] = useState<string>('');

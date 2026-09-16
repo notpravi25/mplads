@@ -13,7 +13,11 @@ import {
   OfficerDashboardResponse,
   OfficerWorkResponse,
   FilterOptions,
-  SyncPreviewResponse
+  SyncPreviewResponse,
+  CitizenComplaint,
+  CitizenComplaintSubmission,
+  CitizenComplaintsResponse,
+  CitizenNearbyWorksResponse
 } from '../types';
 
 const API_BASE = (import.meta as any).env?.VITE_API_BASE_URL || '/api';
@@ -447,4 +451,111 @@ export async function uploadBenchmarkModule(file: File): Promise<any> {
     return { status: 'ERROR', message: 'Network request failed' };
   }
 }
+
+export async function fetchCitizenComplaints(params: {
+  work_id?: string;
+  state?: string;
+  constituency?: string;
+  status?: string;
+  category?: string;
+} = {}): Promise<CitizenComplaintsResponse> {
+  const query = new URLSearchParams();
+  Object.entries(params).forEach(([k, v]) => {
+    if (v) query.append(k, v);
+  });
+  return safeFetchJson<CitizenComplaintsResponse>(
+    `${API_BASE}/citizen/complaints?${query.toString()}`,
+    { total: 0, complaints: [] }
+  );
+}
+
+export async function submitCitizenComplaint(
+  payload: CitizenComplaintSubmission
+): Promise<{ status: string; complaint_id: string; complaint: CitizenComplaint }> {
+  const res = await fetch(`${API_BASE}/citizen/complaints`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(err || 'Failed to submit citizen complaint');
+  }
+  return res.json();
+}
+
+export async function updateCitizenComplaintAction(
+  complaintId: string,
+  status: string,
+  officer_action_notes?: string
+): Promise<{ status: string; complaint: CitizenComplaint }> {
+  const res = await fetch(`${API_BASE}/citizen/complaints/${complaintId}/action`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status, officer_action_notes }),
+  });
+  if (!res.ok) {
+    throw new Error(`Failed updating complaint ${complaintId}`);
+  }
+  return res.json();
+}
+
+export async function fetchNearbyCitizenWorks(params: {
+  state?: string;
+  constituency?: string;
+  work_status?: string;
+  search?: string;
+  page?: number;
+  limit?: number;
+} = {}): Promise<CitizenNearbyWorksResponse> {
+  const query = new URLSearchParams();
+  Object.entries(params).forEach(([k, v]) => {
+    if (v !== undefined && v !== null && v !== '') query.append(k, String(v));
+  });
+  return safeFetchJson<CitizenNearbyWorksResponse>(
+    `${API_BASE}/citizen/nearby-works?${query.toString()}`,
+    { total: 0, page: 1, limit: 25, works: [] }
+  );
+}
+
+export async function locateCitizenByCoords(lat: number, lon: number): Promise<{
+  detected: boolean;
+  state: string;
+  constituency: string;
+  city: string;
+  district: string;
+  display_name: string;
+  lat: number;
+  lon: number;
+}> {
+  return safeFetchJson(`${API_BASE}/citizen/locate?lat=${lat}&lon=${lon}`, {
+    detected: false,
+    state: 'KARNATAKA',
+    constituency: 'DHARWAD',
+    city: '',
+    district: '',
+    display_name: '',
+    lat,
+    lon
+  });
+}
+
+export async function searchCitizenLocations(query: string): Promise<{
+  query: string;
+  results: Array<{
+    state: string;
+    constituency: string;
+    city: string;
+    label: string;
+    match_type: string;
+  }>;
+}> {
+  if (!query || query.trim().length === 0) return { query: '', results: [] };
+  return safeFetchJson(`${API_BASE}/citizen/search-location?query=${encodeURIComponent(query)}`, {
+    query,
+    results: []
+  });
+}
+
+
 
