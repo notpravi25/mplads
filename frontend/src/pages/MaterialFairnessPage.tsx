@@ -370,28 +370,28 @@ ${analysisResult.auditor_guidance.map((g) => `[ ] ${g}`).join('\n')}
     <div className="p-6 space-y-6 max-w-[1600px] mx-auto">
       {/* Toast Notification */}
       {copiedToast && (
-        <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl border border-emerald-500/40 flex items-center gap-2 animate-bounce">
+        <div className="fixed bottom-6 right-6 z-50 bg-[#1c2a30] text-white px-4 py-3 rounded-xl shadow-2xl border border-emerald-500/40 flex items-center gap-2 animate-bounce">
           <CheckCheck className="w-5 h-5 text-emerald-400" />
-          <span className="text-xs font-bold">Official Auditor Citation copied to clipboard!</span>
+          <span className="text-xs font-bold text-white">Official Auditor Citation copied to clipboard!</span>
         </div>
       )}
 
       {/* Top Header Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white p-6 sm:p-8 shadow-xl border border-slate-800">
+      <div className="relative overflow-hidden rounded-3xl officer-hero-banner p-6 sm:p-8 shadow-xl">
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="px-3 py-1 text-xs font-bold uppercase tracking-wider bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 rounded-full flex items-center gap-1.5">
-                <Scale className="w-3.5 h-3.5" /> Material Quality & Price Fairness Engine
+              <span className="px-3 py-1 text-xs font-bold uppercase tracking-wider hero-pill rounded-full flex items-center gap-1.5">
+                <Scale className="w-3.5 h-3.5 text-white" /> Material Quality &amp; Price Fairness Engine
               </span>
-              <span className="px-3 py-1 text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 rounded-full flex items-center gap-1">
-                <FileCheck className="w-3 h-3" /> Grade-Specific OCR & Vision Analysis
+              <span className="px-3 py-1 text-xs font-semibold hero-pill-badge rounded-full flex items-center gap-1">
+                <FileCheck className="w-3 h-3 text-emerald-300" /> Grade-Specific OCR &amp; Vision Analysis
               </span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white">
-              Material Specification & Price Fairness Intelligence
+              Material Specification &amp; Price Fairness Intelligence
             </h1>
-            <p className="text-slate-300 text-sm max-w-3xl leading-relaxed">
+            <p className="text-[#e2ece9] text-sm max-w-3xl leading-relaxed font-medium">
               Extract exact material components, grades, and quality standards (OPC 53 Cement, Fe500D TMT Steel, M25 Concrete, etc.) from physical vouchers/invoices. Evaluates unit price fairness against state Schedule of Rates (SOR) benchmarks using non-adjudicated decision support governance.
             </p>
           </div>
@@ -400,40 +400,40 @@ ${analysisResult.auditor_guidance.map((g) => `[ ] ${g}`).join('\n')}
           <div className="flex flex-wrap items-center gap-2.5 shrink-0">
             <button
               onClick={() => setActiveViewTab('audit')}
-              className={`px-4 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center gap-2 shadow-xs ${
+              className={`px-4 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center gap-2 shadow-xs cursor-pointer ${
                 activeViewTab === 'audit'
-                  ? 'bg-white text-slate-900 shadow-md ring-2 ring-indigo-500'
-                  : 'bg-white/10 text-white hover:bg-white/20 border border-white/10'
+                  ? 'officer-subtab-btn--active'
+                  : 'officer-subtab-btn--inactive'
               }`}
             >
-              <FileText className="w-4 h-4 text-indigo-600 dark:text-indigo-400" /> Live Document Audit
+              <FileText className={`w-4 h-4 ${activeViewTab === 'audit' ? 'text-[#b24e28]' : 'text-white'}`} /> Live Document Audit
             </button>
             <button
               onClick={() => setActiveViewTab('ingestion')}
-              className={`px-4 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center gap-2 shadow-xs ${
+              className={`px-4 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center gap-2 shadow-xs cursor-pointer ${
                 activeViewTab === 'ingestion'
-                  ? 'bg-white text-slate-900 shadow-md ring-2 ring-indigo-500'
-                  : 'bg-white/10 text-white hover:bg-white/20 border border-white/10'
+                  ? 'officer-subtab-btn--active'
+                  : 'officer-subtab-btn--inactive'
               }`}
             >
-              <Upload className="w-4 h-4 text-emerald-500" /> Real-World Ingestion Hub
+              <Upload className={`w-4 h-4 ${activeViewTab === 'ingestion' ? 'text-[#20664e]' : 'text-white'}`} /> Real-World Ingestion Hub
             </button>
             <button
               onClick={() => setActiveViewTab('benchmarks')}
-              className={`px-4 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center gap-2 shadow-xs ${
+              className={`px-4 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center gap-2 shadow-xs cursor-pointer ${
                 activeViewTab === 'benchmarks'
-                  ? 'bg-white text-slate-900 shadow-md ring-2 ring-indigo-500'
-                  : 'bg-white/10 text-white hover:bg-white/20 border border-white/10'
+                  ? 'officer-subtab-btn--active'
+                  : 'officer-subtab-btn--inactive'
               }`}
             >
-              <Layers className="w-4 h-4 text-amber-400" /> Specification Benchmarks ({benchmarks.length})
+              <Layers className={`w-4 h-4 ${activeViewTab === 'benchmarks' ? 'text-[#c07218]' : 'text-white'}`} /> Specification Benchmarks ({benchmarks.length})
             </button>
           </div>
         </div>
 
         {/* Responsible AI Governance Notice Banner */}
-        <div className="mt-6 pt-4 border-t border-white/10 flex items-start gap-3 text-xs text-slate-300">
-          <Info className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+        <div className="mt-6 pt-4 hero-governance-notice flex items-start gap-3 text-xs text-[#e2ece9]">
+          <Info className="w-4 h-4 text-amber-300 shrink-0 mt-0.5" />
           <span>
             <strong className="text-white">Responsible AI Governance Enforced:</strong> The engine evaluates material pricing as an operational decision-support indicator. Strict governance terms apply (<em>"Price appears reasonable"</em>, <em>"Price is above the reference range"</em>, <em>"Requires review"</em>). Terms such as <em>"Fraud"</em> or <em>"Illegal"</em> are strictly excluded.
           </span>
@@ -558,9 +558,9 @@ ${analysisResult.auditor_guidance.map((g) => `[ ] ${g}`).join('\n')}
                 />
                 <button
                   onClick={handleRecalculate}
-                  className="px-4 py-1.5 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 rounded-xl text-xs font-bold hover:bg-slate-800 dark:hover:bg-slate-200 transition-colors shrink-0 shadow-sm flex items-center gap-1.5 cursor-pointer"
+                  className="px-4 py-1.5 officer-btn-dark rounded-xl text-xs font-bold transition-colors shrink-0 shadow-sm flex items-center gap-1.5 cursor-pointer"
                 >
-                  <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} /> Recalculate
+                  <RefreshCw className={`w-3.5 h-3.5 text-white ${loading ? 'animate-spin' : ''}`} /> Recalculate
                 </button>
               </div>
             </div>
@@ -856,20 +856,21 @@ ${analysisResult.auditor_guidance.map((g) => `[ ] ${g}`).join('\n')}
                     </div>
 
                     {/* Step-by-Step Mathematical Calculation Box */}
-                    <div className="p-4 bg-slate-900 text-slate-100 rounded-2xl text-xs space-y-2 font-mono border border-slate-800 shadow-inner">
-                      <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center justify-between">
+                    <div className="p-4 officer-dark-panel rounded-2xl text-xs space-y-2.5 font-mono shadow-inner">
+                      <div className="text-[10.5px] font-bold highlight-header uppercase tracking-wider flex items-center justify-between border-b border-[#26383e] pb-2">
                         <span>Mathematical Formula Execution</span>
-                        <span className="text-emerald-400 font-bold">100% Deterministic Arithmetic</span>
+                        <span className="highlight-status font-bold px-2.5 py-0.5 rounded">100% Deterministic Arithmetic</span>
                       </div>
-                      <div className="text-slate-300">
+                      <div className="text-white font-medium text-xs">
                         Price Difference = Quoted Unit Price (₹Y) - Reference Price (₹X)
                       </div>
-                      <div className="text-slate-300">
+                      <div className="text-white font-medium text-xs">
                         Price Difference % = ((Quoted Price - Reference Price) / Reference Price) × 100
                       </div>
                       {analysisResult.price_comparison.reference_unit_price && analysisResult.price_comparison.quoted_unit_price && (
-                        <div className="text-indigo-300 font-bold pt-2 border-t border-slate-800">
-                          Result: (({analysisResult.price_comparison.quoted_unit_price} - {analysisResult.price_comparison.reference_unit_price}) / {analysisResult.price_comparison.reference_unit_price}) × 100 = {analysisResult.price_comparison.price_difference_pct}%
+                        <div className="highlight-formula font-bold pt-2.5 border-t border-[#26383e] text-[13px] flex items-center gap-2 flex-wrap">
+                          <span>Result: (({analysisResult.price_comparison.quoted_unit_price} - {analysisResult.price_comparison.reference_unit_price}) / {analysisResult.price_comparison.reference_unit_price}) × 100 =</span>
+                          <span className="highlight-badge font-black px-2.5 py-1 rounded-md">{analysisResult.price_comparison.price_difference_pct}%</span>
                         </div>
                       )}
                     </div>
@@ -923,7 +924,7 @@ ${analysisResult.auditor_guidance.map((g) => `[ ] ${g}`).join('\n')}
                       </div>
                     )}
 
-                    <div className="p-3.5 bg-slate-900 text-slate-200 font-mono text-[11px] rounded-xl overflow-x-auto max-h-44 border border-slate-800 leading-relaxed whitespace-pre-wrap">
+                    <div className="p-4 officer-dark-panel font-mono text-[11.5px] rounded-xl overflow-x-auto max-h-48 leading-relaxed whitespace-pre-wrap font-medium">
                       {analysisResult.extracted_text}
                     </div>
                   </div>
@@ -1000,7 +1001,7 @@ ${analysisResult.auditor_guidance.map((g) => `[ ] ${g}`).join('\n')}
                     />
                     <button
                       onClick={handleSearchWorks}
-                      className="px-3 py-2 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 rounded-xl text-xs font-bold hover:bg-slate-800 dark:hover:bg-slate-200 transition-colors shrink-0"
+                      className="px-3.5 py-2 officer-btn-dark rounded-xl text-xs font-bold transition-colors shrink-0 cursor-pointer shadow-xs"
                     >
                       {searchingWorks ? '...' : 'Search'}
                     </button>
@@ -1040,7 +1041,7 @@ ${analysisResult.auditor_guidance.map((g) => `[ ] ${g}`).join('\n')}
                 </div>
 
                 <div className="space-y-3">
-                  <label className="block w-full py-2.5 px-4 bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 rounded-xl text-xs font-bold cursor-pointer hover:bg-slate-800 dark:hover:bg-slate-200 transition-colors shadow-sm text-center">
+                  <label className="block w-full py-2.5 px-4 officer-btn-dark rounded-xl text-xs font-bold cursor-pointer transition-colors shadow-sm text-center">
                     Select CSV File
                     <input type="file" accept=".csv" onChange={(e) => e.target.files && setSorFile(e.target.files[0])} className="hidden" />
                   </label>
@@ -1134,9 +1135,9 @@ ${analysisResult.auditor_guidance.map((g) => `[ ] ${g}`).join('\n')}
           </div>
 
           {/* Benchmarks Table */}
-          <div className="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
+          <div className="overflow-x-auto rounded-2xl border border-[#ded7ca] bg-white shadow-xs">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider border-b border-slate-200 dark:border-slate-700">
+              <thead className="bg-[#f8f5ee] text-[#7f7466] font-bold uppercase tracking-wider border-b border-[#e8e2d9]">
                 <tr>
                   <th className="p-3.5">State / Market</th>
                   <th className="p-3.5">Material Component</th>
@@ -1148,21 +1149,21 @@ ${analysisResult.auditor_guidance.map((g) => `[ ] ${g}`).join('\n')}
                   <th className="p-3.5">Benchmark Source</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
+              <tbody className="divide-y divide-[#f0ebe3] text-[#263a42]">
                 {filteredBenchmarks.map((b, idx) => (
-                  <tr key={idx} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors">
-                    <td className="p-3.5 font-semibold text-slate-900 dark:text-slate-100">{b.state}</td>
-                    <td className="p-3.5 font-medium">{b.material}</td>
-                    <td className="p-3.5 font-bold text-indigo-600 dark:text-indigo-400">{b.grade}</td>
-                    <td className="p-3.5 font-mono">{b.is_code}</td>
-                    <td className="p-3.5 font-semibold">{b.unit}</td>
-                    <td className="p-3.5 text-right font-black text-slate-900 dark:text-slate-100">
+                  <tr key={idx} className="hover:bg-[#f8f5ee] transition-colors">
+                    <td className="p-3.5 font-bold text-[#1c2a30]">{b.state}</td>
+                    <td className="p-3.5 font-semibold text-[#263a42]">{b.material}</td>
+                    <td className="p-3.5 font-bold text-[#b24e28]">{b.grade}</td>
+                    <td className="p-3.5 font-mono text-[#51615f]">{b.is_code}</td>
+                    <td className="p-3.5 font-semibold text-[#51615f]">{b.unit}</td>
+                    <td className="p-3.5 text-right font-black text-[#1c2a30]">
                       ₹{parseFloat(b.reference_price).toLocaleString()}/{b.unit}
                     </td>
-                    <td className="p-3.5 text-right text-slate-500 dark:text-slate-400 font-mono">
+                    <td className="p-3.5 text-right text-[#51615f] font-mono font-medium">
                       ₹{parseFloat(b.min_price).toLocaleString()} - ₹{parseFloat(b.max_price).toLocaleString()}
                     </td>
-                    <td className="p-3.5 text-slate-500 dark:text-slate-400 max-w-[200px] truncate" title={b.source}>
+                    <td className="p-3.5 text-[#7b817c] max-w-[200px] truncate font-medium" title={b.source}>
                       {b.source}
                     </td>
                   </tr>

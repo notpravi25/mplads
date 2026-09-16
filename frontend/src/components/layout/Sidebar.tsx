@@ -1,20 +1,17 @@
 import React from 'react';
 import { 
   BarChart3, 
-  UserCheck,
+  UserCheck, 
   ShieldAlert, 
   Copy, 
   PieChart, 
   CheckSquare, 
-  ClipboardCheck,
-  Compass,
-  RefreshCw,
-  Cpu,
-  MapPin,
-  Map,
-  Clock,
-  Scale,
-  X
+  RefreshCw, 
+  Cpu, 
+  MapPin, 
+  Map, 
+  Clock, 
+  X 
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -40,13 +37,6 @@ interface NavSection {
 export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, isOpen = false, onClose, collapsed = false, totalWorks }) => {
   const sections: NavSection[] = [
     {
-      title: 'Operations',
-      items: [
-        { id: 'officer-dashboard', label: 'Implementing Officer Center', icon: ClipboardCheck },
-        { id: 'citizen-portal', label: 'Citizen Grievance Portal', icon: Compass },
-      ]
-    },
-    {
       title: 'Analytics & Risk',
       items: [
         { id: 'overview', label: 'National Programme Review', icon: BarChart3 },
@@ -63,7 +53,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, isOpe
         { id: 'financial-analytics', label: 'Financial Anomaly Analytics', icon: PieChart },
         { id: 'compliance-monitor', label: 'Compliance Evidence Gaps', icon: CheckSquare },
         { id: 'schedule-progress', label: 'Schedule & Progress Risk', icon: Clock },
-        { id: 'material-fairness', label: 'Material Quality & Price Fairness', icon: Scale },
       ]
     },
     {

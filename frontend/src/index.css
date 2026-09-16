@@ -1049,3 +1049,108 @@ html:not(.dark) .geotag-evidence-modal .text-white { color: #0f172a !important; 
     grid-column: span 4 / span 4 !important;
   }
 }
+
+/* ==========================================================================
+   IMPLEMENTING OFFICER CENTER & MATERIAL FAIRNESS HIGH-CONTRAST DARK STYLES
+   ========================================================================== */
+.officer-hero-banner {
+  background: #18252b !important;
+  color: #ffffff !important;
+  border: 1px solid #2d414a !important;
+  box-shadow: 0 10px 25px -5px rgba(24, 37, 43, 0.4), 0 8px 10px -6px rgba(24, 37, 43, 0.3) !important;
+}
+.officer-hero-banner h1,
+.officer-hero-banner h2,
+.officer-hero-banner h3,
+.officer-hero-banner strong {
+  color: #ffffff !important;
+}
+.officer-hero-banner p {
+  color: #e2ece9 !important;
+}
+.officer-hero-banner span {
+  color: #f1f5f9;
+}
+.officer-hero-banner .hero-pill {
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+}
+.officer-hero-banner .hero-pill-badge {
+  background: rgba(52, 211, 153, 0.2) !important;
+  color: #a7f3d0 !important;
+  border: 1px solid rgba(110, 231, 183, 0.4) !important;
+}
+.officer-hero-banner .hero-governance-notice {
+  border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #e2ece9 !important;
+}
+.officer-hero-banner .hero-governance-notice strong {
+  color: #ffffff !important;
+}
+
+.officer-subtab-btn--active {
+  background-color: #ffffff !important;
+  color: #18252b !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid #ffffff !important;
+}
+.officer-subtab-btn--inactive {
+  background-color: rgba(255, 255, 255, 0.14) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+}
+.officer-subtab-btn--inactive:hover {
+  background-color: rgba(255, 255, 255, 0.24) !important;
+  color: #ffffff !important;
+}
+
+.officer-dark-panel {
+  background-color: #121c21 !important;
+  color: #f8fafc !important;
+  border: 1px solid #283940 !important;
+}
+.officer-dark-panel * {
+  color: #f8fafc;
+}
+.officer-dark-panel .highlight-header {
+  color: #b4c7c4 !important;
+}
+.officer-dark-panel .highlight-formula {
+  color: #fef08a !important; /* amber-200 */
+}
+.officer-dark-panel .highlight-badge {
+  background-color: #26383e !important;
+  color: #ffffff !important;
+  border: 1px solid #3e5761 !important;
+}
+.officer-dark-panel .highlight-status {
+  background-color: rgba(6, 78, 59, 0.7) !important;
+  color: #6ee7b7 !important;
+  border: 1px solid rgba(16, 185, 129, 0.5) !important;
+}
+
+.officer-btn-dark {
+  background-color: #18252b !important;
+  color: #ffffff !important;
+  border: 1px solid #2d414a !important;
+}
+.officer-btn-dark:hover {
+  background-color: #283940 !important;
+  color: #ffffff !important;
+}
+
+.officer-filter-active {
+  background-color: #18252b !important;
+  color: #ffffff !important;
+  border-color: #18252b !important;
+}
+
+.btn-terracotta {
+  background-color: #b24e28 !important;
+  color: #ffffff !important;
+}
+.btn-terracotta:hover {
+  background-color: #8a3819 !important;
+  color: #ffffff !important;
+}

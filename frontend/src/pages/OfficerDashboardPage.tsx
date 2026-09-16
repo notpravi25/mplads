@@ -62,15 +62,15 @@ const money = (amount?: number) => {
 };
 
 const ScoreBar = ({ label, score, source }: { label: string; score: number; source?: string }) => (
-  <div className="rounded-xl border border-slate-200/80 bg-slate-50 p-4">
-    <div className="flex justify-between gap-3 text-xs font-bold text-slate-800">
+  <div className="rounded-xl border border-[#ded7ca] bg-[#fbfaf6] p-4">
+    <div className="flex justify-between gap-3 text-xs font-bold text-[#1c2a30]">
       <span>{label}</span>
       <span className="font-mono">{Number(score || 0).toFixed(1)} / 100</span>
     </div>
-    <div className="mt-3 h-2 rounded-full bg-slate-200 overflow-hidden">
-      <div className="h-full rounded-full bg-slate-900" style={{ width: `${Math.min(100, Math.max(0, Number(score || 0)))}%` }} />
+    <div className="mt-3 h-2 rounded-full bg-[#ded7ca] overflow-hidden">
+      <div className="h-full rounded-full bg-[#b24e28]" style={{ width: `${Math.min(100, Math.max(0, Number(score || 0)))}%` }} />
     </div>
-    {source && <p className="mt-2 text-[10px] font-medium text-slate-500">Source: {source}</p>}
+    {source && <p className="mt-2 text-[10px] font-medium text-[#7b817c]">Source: {source}</p>}
   </div>
 );
 
@@ -211,49 +211,49 @@ export const OfficerDashboardPage: React.FC = () => {
           </div>
           
           {/* Sub-Module Operational Tabs */}
-          <div className="flex flex-wrap items-center gap-1.5 p-1 bg-slate-100 rounded-xl border border-slate-200/80">
+          <div className="flex flex-wrap items-center gap-1.5 p-1 bg-[#f2ede4] rounded-xl border border-[#ded7ca]">
             <button
               onClick={() => setActiveOfficerTab('queue')}
-              className={`px-3 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all ${
+              className={`px-3.5 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all ${
                 activeOfficerTab === 'queue'
-                  ? 'bg-white text-slate-900 shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-white text-[#b24e28] shadow-xs border border-[#ded7ca]'
+                  : 'text-[#65736f] hover:text-[#263a42] hover:bg-white/60'
               }`}
             >
-              <ClipboardCheck className="w-4 h-4 text-emerald-600" />
+              <ClipboardCheck className="w-4 h-4 text-[#20664e]" />
               Priority Work Queue
             </button>
             <button
               onClick={() => setActiveOfficerTab('complaints')}
-              className={`px-3 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all ${
+              className={`px-3.5 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all ${
                 activeOfficerTab === 'complaints'
-                  ? 'bg-white text-slate-900 shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-white text-[#b24e28] shadow-xs border border-[#ded7ca]'
+                  : 'text-[#65736f] hover:text-[#263a42] hover:bg-white/60'
               }`}
             >
-              <MessageSquareWarning className="w-4 h-4 text-orange-600" />
+              <MessageSquareWarning className="w-4 h-4 text-[#c07218]" />
               Citizen Grievances ({dashboard.summary.citizen_complaints})
             </button>
             <button
               onClick={() => setActiveOfficerTab('materials')}
-              className={`px-3 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all ${
+              className={`px-3.5 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all ${
                 activeOfficerTab === 'materials'
-                  ? 'bg-white text-slate-900 shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-white text-[#b24e28] shadow-xs border border-[#ded7ca]'
+                  : 'text-[#65736f] hover:text-[#263a42] hover:bg-white/60'
               }`}
             >
-              <Scale className="w-4 h-4 text-amber-600" />
-              Material Voucher Scanner &amp; Fairness
+              <Scale className="w-4 h-4 text-[#b24e28]" />
+              Material Quality &amp; Price Fairness
             </button>
             <button
               onClick={() => setActiveOfficerTab('benchmarks')}
-              className={`px-3 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all ${
+              className={`px-3.5 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all ${
                 activeOfficerTab === 'benchmarks'
-                  ? 'bg-white text-slate-900 shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-white text-[#b24e28] shadow-xs border border-[#ded7ca]'
+                  : 'text-[#65736f] hover:text-[#263a42] hover:bg-white/60'
               }`}
             >
-              <Building2 className="w-4 h-4 text-indigo-600" />
+              <Building2 className="w-4 h-4 text-[#263a42]" />
               SOR Reference Rates
             </button>
           </div>
@@ -441,17 +441,17 @@ export const OfficerDashboardPage: React.FC = () => {
         </div>
       )}
 
-      {/* Sub-tab 2: Material Voucher Scanner */}
+      {/* Sub-tab 2: Material Quality & Price Fairness */}
       {activeOfficerTab === 'materials' && (
         <div className="space-y-4">
-          <div className="flex items-center justify-between bg-amber-500/10 border border-amber-500/20 rounded-xl p-3 px-4 text-xs text-amber-900 dark:text-amber-300">
-            <span className="flex items-center gap-2 font-semibold">
-              <Scale className="w-4 h-4 text-amber-600" />
+          <div className="flex items-center justify-between bg-[#fdf6ed] border border-[#f5cbbe] rounded-xl p-3.5 px-4 text-xs text-[#263a42]">
+            <span className="flex items-center gap-2 font-bold text-[#b24e28]">
+              <Scale className="w-4 h-4 text-[#b24e28]" />
               Implementing Officer Material Quality &amp; Price Verification Hub
             </span>
             <button
               onClick={() => setActiveOfficerTab('queue')}
-              className="font-bold underline text-amber-800 dark:text-amber-200"
+              className="font-bold underline text-[#b24e28] hover:text-[#8a3819]"
             >
               Back to Officer Work Queue →
             </button>
@@ -463,14 +463,14 @@ export const OfficerDashboardPage: React.FC = () => {
       {/* Sub-tab 3: SOR Reference Rates */}
       {activeOfficerTab === 'benchmarks' && (
         <div className="space-y-4">
-          <div className="flex items-center justify-between bg-indigo-500/10 border border-indigo-500/20 rounded-xl p-3 px-4 text-xs text-indigo-900 dark:text-indigo-300">
-            <span className="flex items-center gap-2 font-semibold">
-              <Building2 className="w-4 h-4 text-indigo-600" />
+          <div className="flex items-center justify-between bg-[#e8f0ea] border border-[#d2dfd4] rounded-xl p-3.5 px-4 text-xs text-[#263a42]">
+            <span className="flex items-center gap-2 font-bold text-[#20664e]">
+              <Building2 className="w-4 h-4 text-[#20664e]" />
               Schedule of Rates (SOR) &amp; CPWD Reference Benchmark Matrix
             </span>
             <button
               onClick={() => setActiveOfficerTab('queue')}
-              className="font-bold underline text-indigo-800 dark:text-indigo-200"
+              className="font-bold underline text-[#20664e] hover:text-[#154635]"
             >
               Back to Officer Work Queue →
             </button>
@@ -501,7 +501,7 @@ export const OfficerDashboardPage: React.FC = () => {
                     }
                   }} 
                   className={`rounded-2xl border bg-white p-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-slate-400 ${
-                    isSelected ? 'border-slate-900 ring-2 ring-slate-200' : 'border-slate-200/80'
+                    isSelected ? 'border-[#263a42] ring-2 ring-[#ded7ca]' : 'border-slate-200/80'
                   }`}
                 >
                   <div className={`mb-3 inline-flex rounded-lg p-2 ${
@@ -538,8 +538,8 @@ export const OfficerDashboardPage: React.FC = () => {
                 type="button" 
                 key={key} 
                 onClick={() => setFocusDimension(key)} 
-                className={`rounded-lg border px-3 py-1.5 text-[11px] font-bold transition ${
-                  focusDimension === key ? 'border-slate-900 bg-slate-900 text-white' : 'border-slate-200 bg-white text-slate-600 hover:border-slate-400'
+                className={`rounded-lg border px-3 py-1.5 text-[11px] font-bold transition cursor-pointer ${
+                  focusDimension === key ? 'officer-filter-active shadow-xs' : 'border-[#ded7ca] bg-white text-[#263a42] hover:border-[#7b817c]'
                 }`}
               >
                 {label}
@@ -562,7 +562,7 @@ export const OfficerDashboardPage: React.FC = () => {
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full min-w-[900px] text-left text-xs">
-                  <thead className="bg-slate-50 text-[10px] uppercase tracking-wider text-slate-500">
+                  <thead className="bg-[#f8f5ee] border-b border-[#e8e2d9] text-[10px] uppercase tracking-wider text-[#7f7466]">
                     <tr>
                       <th className="px-5 py-3">Work ID / Project</th>
                       <th className="px-4 py-3">Why Flagged</th>
@@ -588,8 +588,8 @@ export const OfficerDashboardPage: React.FC = () => {
                           <p className="mt-1 text-[10px] font-bold uppercase text-slate-400">{item.officer_review_status}</p>
                         </td>
                         <td className="px-5 py-4">
-                          <button onClick={() => setSelectedWorkId(item.work_id)} className="inline-flex items-center gap-1 rounded-lg bg-slate-900 px-3 py-2 font-bold text-white">
-                            Review <ChevronRight className="h-3.5 w-3.5" />
+                          <button onClick={() => setSelectedWorkId(item.work_id)} className="inline-flex items-center gap-1.5 rounded-lg btn-terracotta px-3.5 py-2 font-bold transition-colors shadow-xs cursor-pointer">
+                            Review <ChevronRight className="h-3.5 w-3.5 text-white" />
                           </button>
                         </td>
                       </tr>
@@ -644,29 +644,29 @@ const OfficerWorkView: React.FC<{
       <header className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <div className="flex flex-col justify-between gap-5 lg:flex-row">
           <div>
-            <p className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-emerald-700">Project Monitoring — 360° Decision Support</p>
+            <p className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-[#20664e]">Project Monitoring — 360° Decision Support</p>
             <div className="mt-3 flex flex-wrap gap-2">
-              <span className="rounded-lg bg-slate-100 px-3 py-1.5 font-mono text-xs font-bold text-slate-800">{work.work_id}</span>
-              <span className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-800">
-                <MapPin className="mr-1 inline h-3.5 w-3.5" />{work.state || work.State} · {work.constituency || work.Constituency}
+              <span className="rounded-lg bg-[#f2ede4] border border-[#ded7ca] px-3 py-1.5 font-mono text-xs font-bold text-[#1c2a30]">{work.work_id}</span>
+              <span className="rounded-lg border border-[#d2dfd4] bg-[#e8f0ea] px-3 py-1.5 text-xs font-semibold text-[#20664e]">
+                <MapPin className="mr-1 inline h-3.5 w-3.5 text-[#20664e]" />{work.state || work.State} · {work.constituency || work.Constituency}
               </span>
-              <span className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600">{work.work_status || 'Status unavailable'}</span>
+              <span className="rounded-lg border border-[#ded7ca] bg-white px-3 py-1.5 text-xs font-semibold text-[#51615f]">{work.work_status || 'Status unavailable'}</span>
             </div>
-            <h1 className="mt-4 max-w-4xl text-lg font-black leading-snug text-slate-900">{work.description || 'Project description unavailable'}</h1>
-            <p className="mt-2 text-xs text-slate-500">
-              Category: {work.work_category || 'Not available'} · Analytical Result: {work.overall_risk_level || 'UNASSESSED'} · Officer Review: <strong className="text-slate-700">{detail.officer_review.status}</strong>
+            <h1 className="mt-4 max-w-4xl text-lg font-black leading-snug text-[#1c2a30]">{work.description || 'Project description unavailable'}</h1>
+            <p className="mt-2 text-xs text-[#7b817c]">
+              Category: {work.work_category || 'Not available'} · Analytical Result: {work.overall_risk_level || 'UNASSESSED'} · Officer Review: <strong className="text-[#1c2a30]">{detail.officer_review.status}</strong>
             </p>
           </div>
-          <div className="self-start rounded-xl border border-slate-200 bg-slate-50 px-5 py-4 text-center">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Overall Risk Score</p>
-            <p className="mt-1 text-3xl font-black text-slate-900">{Number(work.composite_risk_score || 0).toFixed(1)}</p>
+          <div className="self-start rounded-xl border border-[#ded7ca] bg-[#f8f5ee] px-5 py-4 text-center">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-[#7f7466]">Overall Risk Score</p>
+            <p className="mt-1 text-3xl font-black text-[#1c2a30]">{Number(work.composite_risk_score || 0).toFixed(1)}</p>
             <RiskBadge level={work.overall_risk_level || 'LOW'} />
           </div>
         </div>
       </header>
 
       {/* Jump Links */}
-      <nav className="sticky top-2 z-10 flex gap-2 overflow-x-auto rounded-xl border border-slate-200 bg-white/95 p-2 shadow-sm backdrop-blur">
+      <nav className="sticky top-2 z-10 flex gap-2 overflow-x-auto rounded-xl border border-[#ded7ca] bg-white/95 p-2 shadow-sm backdrop-blur">
         {[
           ['risk-summary', 'Risk Summary'], 
           ['evidence', 'Cross-Module Evidence'], 
@@ -678,7 +678,7 @@ const OfficerWorkView: React.FC<{
           ['duplicates', 'Duplicates'], 
           ['actions', 'Officer Actions']
         ].map(([id, label]) => (
-          <button type="button" key={id} onClick={() => jumpTo(id)} className="whitespace-nowrap rounded-lg px-3 py-2 text-[11px] font-bold text-slate-600 hover:bg-slate-100 hover:text-slate-900">
+          <button type="button" key={id} onClick={() => jumpTo(id)} className="whitespace-nowrap rounded-lg px-3 py-2 text-[11px] font-bold text-[#51615f] hover:bg-[#f4efe5] hover:text-[#1c2a30] transition-colors cursor-pointer">
             {label}
           </button>
         ))}
@@ -806,7 +806,7 @@ const OfficerWorkView: React.FC<{
                         {c.category_label}
                       </span>
                     </div>
-                    <span className="px-2 py-0.5 rounded-full text-[10px] font-black uppercase bg-slate-900 text-white">
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase officer-btn-dark text-white">
                       {c.status.replace(/_/g, ' ')}
                     </span>
                   </div>
